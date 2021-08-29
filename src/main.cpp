@@ -32,6 +32,17 @@ void render()
 	//display simpleWindow
 	pen->setColour(40, 52, 156);
 	pen->drawBackGround();
+	pen->setColour(0,0,0);
+	pen->showAxis();
+	pen->setColour(255,255,255);
+	pen->plot
+	(
+		[](float x)
+		{
+			return 3 * x + 5;
+		}
+	);
+	pen->present();
 }
 
 int init()

@@ -29,3 +29,21 @@ void Renderer::present()
 {
 	SDL_RenderPresent(renderer);
 }
+
+void Renderer::showAxis()
+{
+	SDL_RenderDrawLine(renderer, 0, 400, 800, 400);
+	SDL_RenderDrawLine(renderer, 400, 0, 400, 800);
+}
+
+void Renderer::plot(float(*func)(float))
+{
+
+	float dx = 1;
+
+	for(float i = -400.0f; i <= 400.0f; i+=dx)
+	{
+		//SDL_RenderDrawPoint(renderer, i + 400, 400 - func(i));
+		SDL_RenderDrawLine(renderer, i + 400, 400 - func(i), i + dx + 400, 400 - func(i + dx));
+	}
+}
