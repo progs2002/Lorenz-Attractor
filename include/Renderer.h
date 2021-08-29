@@ -14,5 +14,4 @@ public:
     int drawBackGround();
 	void setColour(int R, int G, int B);
 	void present();
-    void DrawCircle(int32_t centreX, int32_t centreY, int32_t radius);
 };

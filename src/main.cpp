@@ -32,9 +32,6 @@ void render()
 	//display simpleWindow
 	pen->setColour(40, 52, 156);
 	pen->drawBackGround();
-	pen->setColour(255,255,255);
-	pen->DrawCircle(400,400,100);
-	pen->present();
 }
 
 int init()
@@ -42,7 +39,7 @@ int init()
 	SDL_Init(SDL_INIT_EVERYTHING);
 	size = getRES();
 	pen = new Renderer("Lorenz Attractor", size);
-	
+
 	isRunning = true;
 	return 1;
 }
