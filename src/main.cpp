@@ -93,8 +93,8 @@ int main(int argc, char* args[])
 		deltaTime = (double)((currentTick - lastTick) * 1000 / (double)SDL_GetPerformanceFrequency()); // in milliseconds
 		update();
 		render();
-		//std::cout << "time taken to update and render in milliseconds -> " << deltaTime << std::endl;
-		std::cout << "theta = " << theta << std::endl;
+		std::cout << "time taken to update and render in milliseconds -> " << deltaTime << std::endl;
+		//std::cout << "theta = " << theta << std::endl;
 	}
 
 	delete pen;
