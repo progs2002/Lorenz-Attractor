@@ -12,6 +12,9 @@ bool isRunning = false;
 
 RES size;
 
+float scale;
+float theta;
+
 void update()
 {
 	//handle events
@@ -25,23 +28,35 @@ void update()
 		}
 	}
 	
+	scale = abs(0.1 * theta);
+
+	if(theta >= 1000.0f)
+		theta = -1000.0f;
+	
+	theta += 0.01;
 }
 
 void render()
 {
 	//display simpleWindow
-	pen->setColour(40, 52, 156);
+	pen->setColour(0, 0, 0);
 	pen->drawBackGround();
-	pen->setColour(0,0,0);
+	pen->setColour(255,0,0);
 	pen->showAxis();
 	pen->setColour(255,255,255);
 	pen->plot
 	(
 		[](float x)
 		{
-			return 3 * x + 5;
+			x/=scale;
+
+			//enter your function over here
+			float y = sin(x);
+
+			return scale * y;
 		}
 	);
+
 	pen->present();
 }
 
@@ -50,6 +65,8 @@ int init()
 	SDL_Init(SDL_INIT_EVERYTHING);
 	size = getRES();
 	pen = new Renderer("Lorenz Attractor", size);
+
+	theta = -1000.0f;
 
 	isRunning = true;
 	return 1;

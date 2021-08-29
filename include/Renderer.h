@@ -9,6 +9,7 @@ private:
     SDL_Renderer* renderer;
 
 public:
+    RES size;
     Renderer(const char* title, RES size);
     ~Renderer();
     int drawBackGround();
