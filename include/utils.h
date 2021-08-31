@@ -5,5 +5,5 @@
 #include <string>
 
 struct RES { int W, H; };
-struct Point {int x, y; };
+struct Point {int x, y, z; };
 RES getRES();
