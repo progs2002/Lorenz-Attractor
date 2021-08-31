@@ -57,3 +57,8 @@ void Renderer::joinPoints(std::vector<Point*>& points)
 			SDL_RenderDrawLine(renderer, points.at(i)->x + size.W/2, size.H/2 - points.at(i)->y,points.at(i+1)->x + size.W/2, size.H/2 - points.at(i+1)->y);
 	}
 }
+
+void Renderer::join(Point& p1, Point& p2)
+{
+	SDL_RenderDrawLine(renderer, p1.x + size.W/2, size.H/2 - p1.y, p2.x + size.W/2, size.H/2 - p2.y);
+}
