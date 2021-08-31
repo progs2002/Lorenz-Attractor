@@ -14,6 +14,7 @@ RES size;
 
 float scale;
 float theta;
+std::vector<Point*> points;
 
 void update()
 {
@@ -26,24 +27,12 @@ void update()
 			isRunning = false;
 			break;
 		}
-
-		if(event.type == SDL_MOUSEWHEEL)
-		{
-			if(event.wheel.y > 0)
-				theta+=10;
-			else if(event.wheel.y < 0)
-				theta-=10;
-		}
-
 	}
-	
-	scale = abs(0.1 * theta);
 
-	if(theta >= 1000.0f)
-		theta = 1000.0f;
+	points.push_back(new Point{rand() % size.W/2 * (int)pow(-1,rand()), rand() % size.H/2 * (int)pow(-1,rand())});
 
-	if(theta <= 1.0f)
-		theta = 1.0f;
+	SDL_Delay(100);
+
 }
 
 void render()
@@ -51,21 +40,8 @@ void render()
 	//display simpleWindow
 	pen->setColour(0, 0, 0);
 	pen->drawBackGround();
-	pen->setColour(255,0,0);
-	pen->showAxis();
 	pen->setColour(255,255,255);
-	pen->plot
-	(
-		[](float x)
-		{
-			x/=scale;
-
-			//enter your function over here
-			float y = sin(x);
-
-			return scale * y;
-		}
-	);
+	pen->joinPoints(points);
 
 	pen->present();
 }
@@ -77,6 +53,8 @@ int init()
 	pen = new Renderer("Lorenz Attractor", size);
 
 	theta = 180;
+
+	srand(time(0));
 
 	isRunning = true;
 	return 1;

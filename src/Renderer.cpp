@@ -48,3 +48,12 @@ void Renderer::plot(float(*func)(float))
 		SDL_RenderDrawLine(renderer, i + size.W/2, size.H/2 - func(i), i + dx + size.W/2, size.H/2 - func(i + dx));
 	}
 }
+
+void Renderer::joinPoints(std::vector<Point*>& points)
+{
+	if(points.size() > 1)
+	{
+		for(int i = 0; i < points.size() - 1; i++)
+			SDL_RenderDrawLine(renderer, points.at(i)->x + size.W/2, size.H/2 - points.at(i)->y,points.at(i+1)->x + size.W/2, size.H/2 - points.at(i+1)->y);
+	}
+}

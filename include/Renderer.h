@@ -17,4 +17,5 @@ public:
 	void present();
     void showAxis();
     void plot(float(*func)(float));
+    void joinPoints(std::vector<Point*>& points);
 };
