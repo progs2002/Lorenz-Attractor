@@ -65,8 +65,10 @@ void update()
 	for(int i = 0; i < 8; i++)
 	{
 		//rotate here for example lets rotate cube z axis
-		transformed[i] = matmul_return2D(transfrom,points3D[i]);
-		rotated[i] = matmul_return3D(rotationZ, *transformed[i]);
+		rotated[i] = matmul_return3D(rotationX, points3D[i]);
+		rotated[i] = matmul_return3D(rotationY, *rotated[i]);
+		rotated[i] = matmul_return3D(rotationZ, *rotated[i]);
+		transformed[i] = matmul_return2D(transfrom,*rotated[i]);
 	}
 	angle+=0.0001;
 }
@@ -78,19 +80,19 @@ void render()
 	pen->drawBackGround();
 	pen->setColour(255,255,255);
 	
-	pen->join(*rotated[0],*rotated[1]);
-	pen->join(*rotated[1],*rotated[2]);
-	pen->join(*rotated[2],*rotated[3]);
-	pen->join(*rotated[3],*rotated[0]);
-	pen->join(*rotated[4],*rotated[5]);
-	pen->join(*rotated[5],*rotated[6]);
-	pen->join(*rotated[6],*rotated[7]);
-	pen->join(*rotated[7],*rotated[4]);
+	pen->join(*transformed[0],*transformed[1]);
+	pen->join(*transformed[1],*transformed[2]);
+	pen->join(*transformed[2],*transformed[3]);
+	pen->join(*transformed[3],*transformed[0]);
+	pen->join(*transformed[4],*transformed[5]);
+	pen->join(*transformed[5],*transformed[6]);
+	pen->join(*transformed[6],*transformed[7]);
+	pen->join(*transformed[7],*transformed[4]);
 
-	pen->join(*rotated[0],*rotated[4]);
-	pen->join(*rotated[1],*rotated[5]);
-	pen->join(*rotated[2],*rotated[6]);
-	pen->join(*rotated[3],*rotated[7]);
+	pen->join(*transformed[0],*transformed[4]);
+	pen->join(*transformed[1],*transformed[5]);
+	pen->join(*transformed[2],*transformed[6]);
+	pen->join(*transformed[3],*transformed[7]);
 
 	pen->present();
 

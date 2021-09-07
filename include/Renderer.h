@@ -14,6 +14,7 @@ public:
     ~Renderer();
     int drawBackGround();
 	void setColour(int R, int G, int B);
+	void setRandomColour();
 	void present();
     void showAxis();
     void plot(float(*func)(float));
