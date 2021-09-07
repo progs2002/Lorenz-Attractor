@@ -25,3 +25,21 @@ RES getRES()
         }
     }
 }
+
+Point* matmul_return2D(int a[2][3], Point& p)
+{
+    float px,py,pz;
+    px = p.x * a[0][0] + p.y * a[0][1] + p.z * a[0][2];
+    py = p.x * a[1][0] + p.y * a[1][1] + p.z * a[1][2];
+    pz = 0;
+    return new Point{px,py,pz};
+}
+
+Point* matmul_return3D(float a[3][3], Point& p)
+{
+    float px,py,pz;
+    px = p.x * a[0][0] + p.y * a[0][1] + p.z * a[0][2];
+    py = p.x * a[1][0] + p.y * a[1][1] + p.z * a[1][2];
+    pz = p.x * a[2][0] + p.y * a[2][1] + p.z * a[2][2];
+    return new Point{px,py,pz};
+}

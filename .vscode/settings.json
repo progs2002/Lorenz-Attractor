@@ -1,6 +1,10 @@
 {
     "files.associations": {
         "string": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "memory": "cpp",
+        "limits": "cpp",
+        "streambuf": "cpp",
+        "typeinfo": "cpp"
     }
 }
