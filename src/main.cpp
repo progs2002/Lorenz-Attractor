@@ -6,7 +6,7 @@ Uint64 currentTick = SDL_GetPerformanceCounter();
 Uint64 lastTick = 0;
 double deltaTime = 0;
 
-float angle;
+float angle1,angle2,angle3;
 
 SDL_Event event;
 
@@ -31,6 +31,8 @@ Point* transformed[8];
 
 int transfrom[2][3] = {{1,0,0},{0,1,0}};
 
+int dx, dy, dz;
+
 void update()
 {
 	//handle events
@@ -42,23 +44,48 @@ void update()
 			isRunning = false;
 			break;
 		}
+
+		if (event.type == SDL_KEYDOWN)
+		{
+			switch(event.key.keysym.sym)
+			{
+				case SDLK_w:
+					angle1+=0.1;
+				break;
+				case SDLK_s:
+					angle1-=0.1;
+				break;
+				case SDLK_d:
+					angle2+=0.1;
+				break;
+				case SDLK_a:
+					angle2-=0.1;
+				break;
+				case SDLK_LEFT:
+					angle3-=0.1;
+				break;
+				case SDLK_RIGHT:
+					angle3+=0.1;
+
+			}
+		}
 	}
 
 	float rotationX[3][3] = 	{
 							{1,0,0},
-							{0,cos(angle),-sin(angle)},
-							{0,sin(angle),cos(angle)}	
+							{0,cos(angle1),-sin(angle1)},
+							{0,sin(angle1),cos(angle1)}	
 						};   
 
 	float rotationY[3][3] = 	{
-							{cos(angle),0,sin(angle)},
+							{cos(angle2),0,sin(angle2)},
 							{0,1,0},
-							{-sin(angle),0,cos(angle)}	
+							{-sin(angle2),0,cos(angle2)}	
 						};
 
 	float rotationZ[3][3] = 	{
-							{cos(angle),-sin(angle),0},
-							{sin(angle),cos(angle),0},
+							{cos(angle3),-sin(angle3),0},
+							{sin(angle3),cos(angle3),0},
 							{0,0,1}	
 						};
 
@@ -70,7 +97,7 @@ void update()
 		rotated[i] = matmul_return3D(rotationZ, *rotated[i]);
 		transformed[i] = matmul_return2D(transfrom,*rotated[i]);
 	}
-	angle+=0.0001;
+	
 }
 
 void render()
@@ -110,7 +137,9 @@ int init()
 	pen = new Renderer("Lorenz Attractor", size);
 
 	theta = 180;
-	angle=0.0f;
+	angle1=0.0f;
+	angle2=0.0f;
+	angle3=0.0f;
 
 	srand(time(0));
 
