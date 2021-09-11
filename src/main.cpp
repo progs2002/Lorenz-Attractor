@@ -21,7 +21,7 @@ Point points3D[8] = {
 					{0,0,0},{100,0,0},{100,100,0},{0,100,0},{0,0,100},{100,0,100},{100,100,100},{0,100,100}
 				  };
 
-Point* rotated[8];
+Point* rotated;
 
 Point* transformed[8];
 
@@ -92,10 +92,11 @@ void update()
 	for(int i = 0; i < 8; i++)
 	{
 		//rotate here for example lets rotate cube z axis
-		rotated[i] = matmul_return3D(rotationX, points3D[i]);
-		rotated[i] = matmul_return3D(rotationY, *rotated[i]);
-		rotated[i] = matmul_return3D(rotationZ, *rotated[i]);
-		transformed[i] = matmul_return2D(transfrom,*rotated[i]);
+		rotated = matmul_return3D(rotationX, points3D[i]);
+		rotated = matmul_return3D(rotationY, *rotated);
+		rotated = matmul_return3D(rotationZ, *rotated);
+		transformed[i] = matmul_return2D(transfrom,*rotated);
+		delete rotated;
 	}
 	
 }
@@ -123,11 +124,6 @@ void render()
 
 	pen->present();
 
-	for(int i = 0; i < 8; i++)
-	{
-		delete rotated[i];
-		delete transformed[i];
-	}
 }
 
 int init()
