@@ -17,13 +17,10 @@ RES size;
 float scale;
 float theta;
 
-Point points3D[8] = {
-					{0,0,0},{100,0,0},{100,100,0},{0,100,0},{0,0,100},{100,0,100},{100,100,100},{0,100,100}
-				  };
+std::vector<Point*>points3D;
+std::vector<Point*>transformed;
 
 Point* rotated;
-
-Point* transformed[8];
 
 // int rotationX[3][3];
 // int rotationY[3][3];
@@ -71,6 +68,8 @@ void update()
 		}
 	}
 
+	points3D.push_back(getPoint());
+
 	float rotationX[3][3] = 	{
 							{1,0,0},
 							{0,cos(angle1),-sin(angle1)},
@@ -89,14 +88,13 @@ void update()
 							{0,0,1}	
 						};
 
-	for(int i = 0; i < 8; i++)
+	for(int i = 0; i < points3D.size(); i++)
 	{
 		//rotate here for example lets rotate cube z axis
-		rotated = matmul_return3D(rotationX, points3D[i]);
+		rotated = matmul_return3D(rotationX, *points3D.at(i));
 		rotated = matmul_return3D(rotationY, *rotated);
 		rotated = matmul_return3D(rotationZ, *rotated);
-		transformed[i] = matmul_return2D(transfrom,*rotated);
-		delete rotated;
+		transformed.push_back(matmul_return2D(transfrom,*rotated));
 	}
 	
 }
@@ -108,19 +106,7 @@ void render()
 	pen->drawBackGround();
 	pen->setColour(255,255,255);
 	
-	pen->join(*transformed[0],*transformed[1]);
-	pen->join(*transformed[1],*transformed[2]);
-	pen->join(*transformed[2],*transformed[3]);
-	pen->join(*transformed[3],*transformed[0]);
-	pen->join(*transformed[4],*transformed[5]);
-	pen->join(*transformed[5],*transformed[6]);
-	pen->join(*transformed[6],*transformed[7]);
-	pen->join(*transformed[7],*transformed[4]);
-
-	pen->join(*transformed[0],*transformed[4]);
-	pen->join(*transformed[1],*transformed[5]);
-	pen->join(*transformed[2],*transformed[6]);
-	pen->join(*transformed[3],*transformed[7]);
+	pen->joinPoints(transformed);
 
 	pen->present();
 

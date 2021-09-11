@@ -43,3 +43,13 @@ Point* matmul_return3D(float a[3][3], Point& p)
     pz = p.x * a[2][0] + p.y * a[2][1] + p.z * a[2][2];
     return new Point{px,py,pz};
 }
+
+Point* getPoint()
+{
+    int x, y, z;
+    std::cout << "enter a point in 3d" << std::endl;
+    std::cin >> x;
+    std::cin >> y;
+    std::cin >> z;
+    return new Point{(float)x,(float)y,(float)z};
+}

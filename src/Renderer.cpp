@@ -12,7 +12,9 @@ Renderer::~Renderer()
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+	std::cout << "===========================" << std::endl;
 	std::cout << "deleted window and renderer" << std::endl;
+	std::cout << "===========================" << std::endl;
 }
 
 int Renderer::drawBackGround()
