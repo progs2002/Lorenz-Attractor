@@ -28,7 +28,21 @@ Point* rotated;
 
 int transfrom[2][3] = {{1,0,0},{0,1,0}};
 
-int dx, dy, dz;
+float x, y, z;
+float dx, dy, dz;
+
+//constants
+float sigma = 4, rho = 10, beta = 6;
+
+void calculate()
+{
+	dx = (sigma * (y - x) * deltaTime) / 1000;
+	dy = ((x * (rho - z) ) - y * deltaTime )/ 1000;
+	dz = (x * y - beta * z * deltaTime)/ 1000;
+	x+=dx; y+=dy; z+=dz;
+}
+
+int count;
 
 void update()
 {
@@ -63,12 +77,26 @@ void update()
 				break;
 				case SDLK_RIGHT:
 					angle3+=0.1;
-
 			}
 		}
 	}
 
-	points3D.push_back(getPoint());
+	//add points
+
+	
+
+	calculate();
+	if(points3D.size() < 5000)
+		points3D.push_back(new Point{x,y,z});
+	else
+	{
+		delete points3D[count];
+		points3D[count] = new Point{x,y,z};
+		count++;
+	}
+
+	if(count == 5000)
+		count = 0;
 
 	float rotationX[3][3] = 	{
 							{1,0,0},
@@ -88,15 +116,14 @@ void update()
 							{0,0,1}	
 						};
 
+	//rotate and project
 	for(int i = 0; i < points3D.size(); i++)
 	{
-		//rotate here for example lets rotate cube z axis
 		rotated = matmul_return3D(rotationX, *points3D.at(i));
 		rotated = matmul_return3D(rotationY, *rotated);
 		rotated = matmul_return3D(rotationZ, *rotated);
 		transformed.push_back(matmul_return2D(transfrom,*rotated));
 	}
-	
 }
 
 void render()
@@ -108,8 +135,11 @@ void render()
 	
 	pen->joinPoints(transformed);
 
+	transformed.clear();
+
 	pen->present();
 
+	transformed.clear();
 }
 
 int init()
@@ -122,6 +152,10 @@ int init()
 	angle1=0.0f;
 	angle2=0.0f;
 	angle3=0.0f;
+
+	count = 0;
+
+	x = 5; y = 0; z = 0;
 
 	srand(time(0));
 
@@ -140,7 +174,8 @@ int main(int argc, char* args[])
 		deltaTime = (double)((currentTick - lastTick) * 1000 / (double)SDL_GetPerformanceFrequency()); // in milliseconds
 		update();
 		render();
-		std::cout << "time taken to update and render in milliseconds -> " << deltaTime << std::endl;
+		//std::cout << "time taken to update and render in milliseconds -> " << deltaTime << std::endl;
+		std::cout << "frame time" << deltaTime << "number of points -> " << points3D.size() << std::endl;
 		//std::cout << "theta = " << theta << std::endl;
 	}
 
