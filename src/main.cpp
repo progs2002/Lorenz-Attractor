@@ -32,7 +32,7 @@ float x, y, z;
 float dx, dy, dz;
 
 //constants
-float sigma = 4, rho = 10, beta = 6;
+float sigma = 0.4, rho = 0.5, beta = 1.4;
 
 void calculate()
 {
@@ -155,9 +155,9 @@ int init()
 
 	count = 0;
 
-	x = 5; y = 0; z = 0;
+	x = 200; y = 20; z = 0;
 
-	srand(time(0));
+	//srand(time(0));
 
 	isRunning = true;
 	return 1;
