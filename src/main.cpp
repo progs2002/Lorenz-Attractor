@@ -86,17 +86,9 @@ void update()
 	
 
 	calculate();
-	if(points3D.size() < 7000)
+	if(points3D.size() < 8000)
 		points3D.push_back(new Point{x,y,z});
-	else
-	{
-		delete points3D[count];
-		points3D[count] = new Point{x,y,z};
-		count++;
-	}
-
-	if(count == 7000)
-		count = 0;
+	
 
 	float rotationX[3][3] = 	{
 							{1,0,0},
