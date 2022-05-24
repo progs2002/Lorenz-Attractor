@@ -14,6 +14,7 @@ RES size;
 
 float scale;
 float theta;
+float offset;
 
 void update()
 {
@@ -33,6 +34,21 @@ void update()
 				theta+=10;
 			else if(event.wheel.y < 0)
 				theta-=10;
+		}
+
+		if(event.type == SDL_KEYDOWN)
+		{
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_LEFT:
+				offset -= 5;
+				break;
+			case SDLK_RIGHT:
+				offset += 5;
+				break;
+			default:
+				break;
+			}
 		}
 
 	}
@@ -59,9 +75,9 @@ void render()
 		[](float x)
 		{
 			x/=scale;
-
+			x += offset;
 			//enter your function over here
-			float y = sin(x);
+			float y = 3*x + 5;
 
 			return scale * y;
 		}
@@ -77,6 +93,7 @@ int init()
 	pen = new Renderer("Lorenz Attractor", size);
 
 	theta = 180;
+	offset = 0;
 
 	isRunning = true;
 	return 1;
