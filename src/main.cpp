@@ -14,7 +14,8 @@ RES size;
 
 float scale;
 float theta;
-float offset;
+float x_offset;
+float y_offset;
 
 void update()
 {
@@ -41,10 +42,16 @@ void update()
 			switch (event.key.keysym.sym)
 			{
 			case SDLK_LEFT:
-				offset -= 5;
+				x_offset -= 0.5;
 				break;
 			case SDLK_RIGHT:
-				offset += 5;
+				x_offset += 0.5;
+				break;
+			case SDLK_UP:
+				y_offset -= 5;
+				break;
+			case SDLK_DOWN:
+				y_offset += 5;
 				break;
 			default:
 				break;
@@ -75,11 +82,11 @@ void render()
 		[](float x)
 		{
 			x/=scale;
-			x += offset;
+			x += x_offset;
 			//enter your function over here
-			float y = 3*x + 5;
+			float y = x*x;
 
-			return scale * y;
+			return scale * y + y_offset;
 		}
 	);
 
@@ -93,7 +100,7 @@ int init()
 	pen = new Renderer("Lorenz Attractor", size);
 
 	theta = 180;
-	offset = 0;
+	x_offset = 0;
 
 	isRunning = true;
 	return 1;
